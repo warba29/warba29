@@ -101,12 +101,17 @@ def tik():
         sys.stdout.flush();jeda(1)
 		
 def folder():
-	try:os.mkdir('hasil')
-	except:pass
 	try:os.mkdir('OK')
 	except:pass
 	try:os.mkdir('CP')
 	except:pass
+	try:os.mkdir('data')
+	except:pass
+	try:
+		ua_ = 'Mozilla/5.0 (Linux; Android 10; Mi 9T Pro Build/QKQ1.190825.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/88.0.4324.181 Mobile Safari/537.36[FBAN/EMA;FBLC/it_IT;FBAV/239.0.0.10.109;]'
+		open("data/ua.txt","w").write(ua_)
+	except:
+		pass
 
 # LOGO (LO GOBLOK)
 ip = requests.get('https://api.ipify.org').text
@@ -1071,5 +1076,5 @@ exec(base64.b64decode('ZGVmIGxvZ2luX3h4KCk6CiAgICB0cnk6CiAgICAgICAgdG9rZW4gPSBvc
 if __name__ == '__main__':
     os.system('git pull')
     folder()
-    konfir()
+    menu()
     
